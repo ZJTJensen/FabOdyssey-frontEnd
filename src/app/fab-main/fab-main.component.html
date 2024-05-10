@@ -1,0 +1,44 @@
+<div>
+    <div *ngIf="!userInfo && !logingIn">
+        <div> 
+            <span> login (deck link) </span>
+            <input type="text" value="https://fabdb.net/decks/build/" (keyup)="onKey($event)" />
+            <button (click)="login()" [disabled]="!loginValue">login</button>
+        </div>
+        <div *ngIf="isDeckValid">
+            Create Account:
+            <div>
+                Discord Username:
+                <input type='text' (keyup)="setUserName($event)"/>
+            </div>
+            <div>
+                Phone Number:
+                <input type='text' mask="(000) 000-0000"  (keyup)="setPhone($event)"/>
+                <button (click)="signUp()" [disabled]="!loginValue || !phone || !userName">Sign Up</button>
+            </div>
+        </div>
+    </div>
+   
+    <div *ngIf="logingIn">
+        <div class="spinner"></div>
+        Checking validity of deck
+    </div>
+    <div *ngIf="isDeckValid">
+        <h4>Deck is valid</h4>
+    </div>
+    <div *ngIf="!isDeckValid && loginAttempt">
+        <h4>Deck is not valid</h4>
+    </div>
+    <app-user-info 
+    *ngIf="response.slug !== undefined  && userInfo"
+        [userInfo]="userInfo" [limiters]="limiters" [cardList]="cardList"[owenedCards]="owenedCards" [logingIn]="logingIn"
+        [isDeckValid]="isDeckValid"
+        (quit)="quit($event)" 
+        (selectedCard)="saveSelectedCard($event)"
+        (increaseLevel)="increaseLevel()">
+    </app-user-info>
+
+    <div *ngIf="!isDeckValid">
+
+    </div>
+</div>

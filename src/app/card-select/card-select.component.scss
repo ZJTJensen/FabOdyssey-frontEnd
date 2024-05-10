@@ -1,0 +1,20 @@
+.image_select{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover{
+        background-color: #f0f0f0;
+    }
+    img{
+        width: 33.333333%;
+    }
+    .image_select_text{
+        text-align: center;
+    }
+}

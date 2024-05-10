@@ -1,0 +1,16 @@
+.card-image {
+    margin-top: 2.5px;
+    height: 250px;
+    display: inline-block;
+    margin-right: 10px; /* adjust as needed */
+}
+
+img{
+    height: 250px;
+}
+
+.cardDiv {
+    width: 100%; /* adjust as needed */
+    white-space: nowrap;
+    overflow-x: auto;
+}
