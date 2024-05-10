@@ -10,5 +10,5 @@ import { FabMainComponent } from './fab-main/fab-main.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'fab-adventure-game';
+  title = 'fabodyssey-frontend';
 }
