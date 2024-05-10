@@ -7,7 +7,7 @@ app.use(express.static(path.join(__dirname, 'dist/fabodyssey-frontend')));
 
 app.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname, 'dist/fabodyssey-frontend', 'index.html'));
-  });
+});
   
   // default Heroku port
   app.listen(process.env.PORT || 5000);
