@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:fab-adventure-game": "node dist/fab-adventure-game/server/server.mjs"
+    "serve:ssr:fab-adventure-game": "node dist/fab-adventure-game/server/server.mjs",
+    "postinstall": "ng build --prod"
   },
   "private": true,
   "dependencies": {
