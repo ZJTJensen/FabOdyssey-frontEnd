@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:fab-adventure-game": "node dist/fab-adventure-game/server/server.mjs",
-    "postinstall": "ng build --prod"
+    "postinstall": "ng build --configuration production"
   },
   "private": true,
   "dependencies": {
