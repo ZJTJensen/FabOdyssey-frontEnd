@@ -1,6 +1,6 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { CommonEngine } from '@angular/ssr';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
@@ -25,7 +25,7 @@ export function app(): express.Express {
   }));
 
   // All regular routes use the Angular engine
-  server.get('*', (req, res, next) => {
+  server.get('*', (req: Request, res: Response, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
 
     commonEngine
