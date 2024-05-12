@@ -9,7 +9,7 @@
     "test": "ng test",
     "preinstall": "npm install",
     "postinstall": "ng build",
-    "serve:ssr:fabodyssey-frontend": "npx ng run fabodyssey-frontend:serve",
+    "serve:ssr:fabodyssey-frontend": "npx ng run fabodyssey-frontend:serve"
     
   },
   "private": true,
