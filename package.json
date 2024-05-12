@@ -7,7 +7,7 @@
     "build": "tsc",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "install": "npm install",
+    "preinstall": "npm install",
     "postinstall": "ng build",
     "serve:ssr:fabodyssey-frontend": "npx ng run fabodyssey-frontend:serve",
     
