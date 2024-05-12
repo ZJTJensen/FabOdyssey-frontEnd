@@ -3,11 +3,15 @@ import { CommonEngine } from '@angular/ssr';
 import express, { NextFunction, Request, Response } from 'express';
 import { dirname, join, resolve } from 'path';
 import bootstrap from './src/main.server';
+import { fileURLToPath } from 'url';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
-  const serverDistFolder = dirname(__filename);
+
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
+  const serverDistFolder = dirname(__dirname);
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
 
