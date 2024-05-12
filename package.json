@@ -7,8 +7,8 @@
     "build": "tsc",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:fabodyssey-frontend": "./node_modules/.bin/ng run fabodyssey-frontend:serve",
-    "postinstall": "ng build --configuration production"
+    "serve:ssr:fabodyssey-frontend": "npx ng run fabodyssey-frontend:serve",
+    "postinstall": "ng build"
   },
   "private": true,
   "dependencies": {
