@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ts-node -O \"{\\\"module\\\":\\\"commonjs\\\"}\" server.ts",
-    "build": "ng build",
+    "build": "tsc",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:fabodyssey-frontend": "node dist/fabodyssey-frontend/server/server.mjs",
