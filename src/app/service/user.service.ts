@@ -17,7 +17,7 @@ import { Card } from 'fab-cards';
       let userRequest = {
         slug: userKey
       }
-      return this.http.post<any>('http://localhost:8080/user/fetch', userRequest)
+      return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/fetch', userRequest)
     }
     public setUserInfo(userKey: string, phoneNumber: number, deck: Deck): Observable<any> {
       let userRequest = {
@@ -25,25 +25,25 @@ import { Card } from 'fab-cards';
         phoneNumber: phoneNumber,
         deck: deck
       }
-      return this.http.post<any>('http://localhost:8080/user/create', userRequest)
+      return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/create', userRequest)
     }
     public addCard(userKey: string, card: Card): Observable<any> {
       let userRequest = {
         slug: userKey,
         card: card
       }
-      return this.http.post<any>('http://localhost:8080/user/card', userRequest)
+      return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/card', userRequest)
     }
 
     public getUseresInBracked(userKey: string): Observable<any> {
       let userRequest = {
         user: userKey
       }
-      return this.http.post<any>('http://localhost:8080/user/usersInBracket', userRequest)
+      return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/usersInBracket', userRequest)
     }
 
     public getUsers(): Observable<any> {
-      return this.http.get<any>('http://localhost:8080/user/loggedInUsers')
+      return this.http.get<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/loggedInUsers')
     }
 
     public addLevel(slug: string, newLevel: number): Observable<any> {
@@ -51,6 +51,6 @@ import { Card } from 'fab-cards';
           slug: slug,
           userLevel: newLevel
       }
-      return this.http.post<any>('http://localhost:8080/user/addLevel', userRequest)
+      return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/addLevel', userRequest)
   }
 }

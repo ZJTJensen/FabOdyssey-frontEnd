@@ -130,5 +130,8 @@
     "root": ".",
     "analytics": "27335011-9274-4004-98dc-64beb7659057"
   }
+},
+"cli": {
+  "analytics": "7cb26e2f-c9eb-49d1-b91c-8bee7a9dfbdc"
 }
 }
