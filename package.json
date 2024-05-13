@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ts-node server.ts",
     "build": "tsc",
-    "watch": "ng build --watch --configuration development",
+    "watch": "ng build --watch --configuration development --aot",
     "test": "ng test",
     "postinstall": "ng build",
     "serve:ssr:fabodyssey-frontend": "node ./node_modules/@angular/cli/bin/ng run fabodyssey-frontend:serve"
