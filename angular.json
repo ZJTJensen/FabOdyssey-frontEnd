@@ -39,8 +39,7 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "bundleDependencies": "all"
+              "vendorChunk": false
             },
             "development": {
               "optimization": false,
@@ -49,7 +48,7 @@
             }
           },
           "defaultConfiguration": "production"
-        },
+        } ,
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
