@@ -7,7 +7,7 @@
     "build": "tsc",
     "test": "ng test",
     "serve:ssr:fabodyssey-frontend": "node ./node_modules/@angular/cli/bin/ng run fabodyssey-frontend:serve",
-    "postinstall": "ng build"
+    "postinstall": "ng build --prod"
   },
   "private": true,
   "dependencies": {
