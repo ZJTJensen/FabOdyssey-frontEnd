@@ -2,7 +2,7 @@
     <div *ngIf="!userInfo && !logingIn">
         <div> 
             <span> login (deck link) </span>
-            <input type="text" value="https://fabdb.net/decks/build/" (keyup)="onKey($event)" />
+            <input type="text" value="https://fabdb.net/decks/" (keyup)="onKey($event)" />
             <button (click)="login()" [disabled]="!loginValue">login</button>
         </div>
         <div *ngIf="isDeckValid">

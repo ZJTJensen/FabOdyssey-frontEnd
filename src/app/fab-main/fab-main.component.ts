@@ -85,7 +85,7 @@ export class FabMainComponent {
   
   public onKey(event: any){
     const url = (event.target as HTMLInputElement).value;
-    if (url.includes('fabdb.net/decks/build/') && url[url.length - 1] !== '/') {
+    if (url.includes('fabdb.net/decks/') && url[url.length - 1] !== '/') {
       this.loginValue = url;
       this.deckUrl = url.substring(url.lastIndexOf('/') + 1);
     } else {
