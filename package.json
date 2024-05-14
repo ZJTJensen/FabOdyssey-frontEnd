@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
-    "build": "tsc",
+    "build": "tsc --watch false",
     "test": "ng test",
     "serve:ssr:fabodyssey-frontend": "node ./node_modules/@angular/cli/bin/ng run fabodyssey-frontend:serve",
     "build:ssr": "ng build --configuration production && ng run fabodyssey-frontend:server:production",
