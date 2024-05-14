@@ -8,11 +8,12 @@ import { Observable, mergeMap, switchMap, tap } from 'rxjs';
 import { CardSelectComponent } from '../card-select/card-select.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { UserInfoComponent } from '../user-info/user-info.component';
+import { RulesComponent } from '../rules/rules.component';
 
 @Component({
   selector: 'app-fab-main',
   standalone: true,
-  imports: [CommonModule, CardSelectComponent, UserInfoComponent, NgxMaskDirective, NgxMaskPipe],
+  imports: [CommonModule, CardSelectComponent, UserInfoComponent, NgxMaskDirective, NgxMaskPipe, RulesComponent],
   providers: [provideNgxMask()],
   templateUrl: './fab-main.component.html',
   styleUrl: './fab-main.component.scss'
@@ -35,11 +36,14 @@ export class FabMainComponent {
   public isDeckValid: boolean = false;
   public userInfo: any;
   public phone: any = "";
+  public cardsNotOwned: any = [];
   public loginAttempt: boolean = false;
   public logingIn: boolean = false;
   public loginValue: string = "";
   public userName: string = "";
   public isLoggedIn: boolean = false;
+  public displayRules = false;
+  public loginUrl: string = "https://fabdb.net/decks/";
 
   public login() {
     this.logingIn = true;
@@ -85,6 +89,7 @@ export class FabMainComponent {
   
   public onKey(event: any){
     const url = (event.target as HTMLInputElement).value;
+    this.loginUrl = url;
     if (url.includes('fabdb.net/decks/') && url[url.length - 1] !== '/') {
       this.loginValue = url;
       this.deckUrl = url.substring(url.lastIndexOf('/') + 1);
@@ -144,42 +149,46 @@ export class FabMainComponent {
       }
   );
   }
+  toggleRules() {
+    this.displayRules = !this.displayRules;
+}
 
   public checkValidity() {
     let userLevel = this.userInfo ? this.userInfo.userLevel : 0;
     let cardsInDeck: any = [];
-    let cardsOwned: any = [];
+    this.cardsNotOwned = [];
     let rareTotalCardCount = 0;
     let majesticTotalCount = 0;
     let rareCardCount = 0;
     let majesticCount = 0;
     for (let card of this.cardList){
       if(!card.keywords.includes("hero")) {
-        // Allows users to have up to 2 coppies of the slected card.
-        if (!cardsInDeck.includes(card)) {
-          if (card.rarity === 'R'){
-            cardsInDeck.push(card);
-            rareCardCount++;
-          } else if (card.rarity === 'M' || card.rarity === 'S'|| card.rarity === 'L'){
-            cardsInDeck.push(card);
-            rareCardCount++;
-          }
-       }
-      }
-      
-      if(this.owenedCards.some(ownedCard => ownedCard.identifier.includes(card.identifier))){
-        if (card.rarity === 'R'){
-          cardsOwned.push(card);
-          rareTotalCardCount++;
-        } else if (card.rarity === 'M' || card.rarity === 'S'|| card.rarity === 'L') {
-          cardsOwned.push(card);
-          majesticTotalCount++;
+        // Check if the card is of rarity 'R', 'M', 'S', or 'L'
+        if (['R', 'M', 'S', 'L'].includes(card.rarity)) {
+            // Check if the card is in the owned cards list
+            if(this.owenedCards.some(ownedCard => ownedCard.identifier.includes(card.identifier))){
+                // Add the card to the deck
+                cardsInDeck.push(card);
+    
+                // Update the count based on the card rarity
+                if (card.rarity === 'R'){
+                    rareCardCount++;
+                    rareTotalCardCount++;
+                } else {
+                    majesticCount++;
+                    majesticTotalCount++;
+                }
+            } else {
+              this.cardsNotOwned.push(card);
+            }
         }
-      }
+    }
     }
     let totalCount = rareTotalCardCount + majesticTotalCount;
     let cardCount = rareCardCount + majesticCount;
-    if (cardCount <= userLevel) {
+    if(this.cardsNotOwned.length > 0) {
+      this.isDeckValid = false;
+    } else if (cardCount <= userLevel) {
       this.isDeckValid = true;
       if ((cardCount +  (this.owenedCards.length - totalCount)) < userLevel) {
         this.userInfo.needsToSelectNewCard = this.isLoggedIn ? true : false;

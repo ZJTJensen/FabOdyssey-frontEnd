@@ -1,20 +1,36 @@
 <div>
+    <img id="logo" src="../../assets/logo.png">
+    <div id="rules">
+        <button class="rules-text" *ngIf="!displayRules" (click)="toggleRules()">Show Rules</button>
+        <app-rules *ngIf="displayRules">
+            
+        </app-rules>
+        <button *ngIf="displayRules" (click)="toggleRules()" class="rules-text">Hide Rules</button>
+    </div>
+</div>
+
+<div id="content">
     <div *ngIf="!userInfo && !logingIn">
         <div> 
-            <span> login (deck link) </span>
-            <input type="text" value="https://fabdb.net/decks/" (keyup)="onKey($event)" />
-            <button (click)="login()" [disabled]="!loginValue">login</button>
+            <span class="input-label"> login (fabdb link) </span>
+            <input id="loginInput" type="text" value="{{loginUrl}}" (keyup)="onKey($event)" />
+            
         </div>
         <div *ngIf="isDeckValid">
             Create Account:
             <div>
-                Discord Username:
+                <span class="input-label"> Discord Username:</span>
                 <input type='text' (keyup)="setUserName($event)"/>
             </div>
             <div>
-                Phone Number:
+                <span class="input-label"> Phone Number:</span>
                 <input type='text' mask="(000) 000-0000"  (keyup)="setPhone($event)"/>
-                <button (click)="signUp()" [disabled]="!loginValue || !phone || !userName">Sign Up</button>
+            </div>
+        </div>
+        <div class="button-container">
+            <button class="loginButton" (click)="login()" [disabled]="!loginValue">login</button>
+            <div *ngIf="isDeckValid">
+                <button class="loginButton" (click)="signUp()" [disabled]="!loginValue || !phone || !userName">Sign Up</button>
             </div>
         </div>
     </div>
@@ -23,16 +39,17 @@
         <div class="spinner"></div>
         Checking validity of deck
     </div>
-    <div *ngIf="isDeckValid">
-        <h4>Deck is valid</h4>
+    <div *ngIf="isDeckValid" >
+        <h4 id="valid">Deck is valid</h4>
     </div>
-    <div *ngIf="!isDeckValid && loginAttempt">
-        <h4>Deck is not valid</h4>
+    <div *ngIf="!isDeckValid && loginAttempt" >
+        <h4 id="invalid">Deck is not valid</h4>
     </div>
     <app-user-info 
     *ngIf="response.slug !== undefined  && userInfo"
         [userInfo]="userInfo" [limiters]="limiters" [cardList]="cardList"[owenedCards]="owenedCards" [logingIn]="logingIn"
         [isDeckValid]="isDeckValid"
+        [cardsNotOwned]="cardsNotOwned"
         (quit)="quit($event)" 
         (selectedCard)="saveSelectedCard($event)"
         (increaseLevel)="increaseLevel()">
@@ -41,4 +58,24 @@
     <div *ngIf="!isDeckValid">
 
     </div>
+</div>
+
+
+<div id="footer">
+    <p>
+        Join the 
+        <a href="https://discord.gg/vb2c3gTy2e" target="_blank">
+            Disord
+        </a>
+    </p>
+    <p>
+        Follow me on 
+        <a href="https://twitter.com/St_Havock" target="_blank">
+            Twitter
+        </a>
+        <a href="https://www.youtube.com/@St_Havock" target="_blank">
+            YouTube
+        </a>
+    </p>
+    <p>&copy; 2024 FabOdyssey. All rights reserved.</p>
 </div>

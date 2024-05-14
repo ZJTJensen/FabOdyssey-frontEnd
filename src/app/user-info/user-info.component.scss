@@ -1,16 +1,35 @@
-.card-image {
-    margin-top: 2.5px;
-    height: 250px;
-    display: inline-block;
-    margin-right: 10px; /* adjust as needed */
-}
-
-img{
-    height: 250px;
-}
-
 .cardDiv {
-    width: 100%; /* adjust as needed */
-    white-space: nowrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+    // grid-gap: 10px;
     overflow-x: auto;
+}
+.card-image {
+    flex: 0 0 auto;
+    margin-top: 2.5px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // margin-right: 10px; /* adjust as needed */
+}
+
+img {
+    max-width: 100%;
+    height: 100%;
+}
+
+.primary-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
 }

@@ -41,3 +41,133 @@ button {
 button:hover {
     background-color: #2980b9;
 }
+
+#logo {
+    display: block;
+    margin: 0 auto;
+    width: 150px;
+}
+
+div {
+    color: #ffffff;
+}
+
+h4 {
+    color: #ffffff;
+}
+
+#footer a {
+    color: #ff0000;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+
+#footer {
+    height: 60px;  // Adjust this value as needed
+    background-color: #2980b9 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+#footer p {
+    margin: 2.5px;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+#rules {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+div {
+    & #logo {
+        display: block;
+        margin: 0 auto;
+        width: 250px;
+        height: 250px;
+    }
+
+    & #rules {
+        text-align: center;
+        button {
+            background-color: #163782;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    }
+
+    & #content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+.loginButton {
+    margin: 30px 20px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-label {
+    display: block;
+    text-align: center;
+}
+
+#loginInput {
+    position: relative;
+    margin: 10px 20px;
+}
+
+#valid{
+    color: #00FF00;
+}
+
+#invalid{
+    color: red;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;  // Adjust this as needed
+}
+
+.container {
+    display: flex;
+}
+.rules-text{
+    color:#f45052 !important;
+}

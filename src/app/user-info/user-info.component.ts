@@ -19,6 +19,7 @@ export class UserInfoComponent implements OnInit {
   @Input() limiters: any;
   @Input() owenedCards: any;
   @Input() cardList: Array<any> = [];
+  @Input() cardsNotOwned: Array<any> = [];
   @Output() quit = new EventEmitter<string>();
   @Output() selectedCard = new EventEmitter<Card>();
   @Output() increaseLevel = new EventEmitter<Card>();
@@ -26,6 +27,8 @@ export class UserInfoComponent implements OnInit {
   public deckService: FabDbService;
   public userService: UserService;
   public listOfUsersInBracket: Array<any> = [];
+  public displayOwnedCards: boolean = false;
+  public displayCardsNotOwned: boolean = false;
   constructor(deckService: FabDbService, userService: UserService) {
     this.deckService = deckService,
     this.userService = userService
@@ -50,7 +53,7 @@ export class UserInfoComponent implements OnInit {
   public getCardImage(cardIdentifier: any) {
     let cardUrl: any;
     cards.forEach(card => { 
-      if (cardIdentifier === card.cardIdentifier) {
+      if (card.cardIdentifier.includes(cardIdentifier)) {
           if(!card.defaultImage.includes('.png')) {
               let cardLocation = card.defaultImage.split('.');
               cardUrl = this.deckService.getImageUrl(cardLocation[0]);

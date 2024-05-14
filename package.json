@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node serve.js",
+    "start": "node server.js",
     "build": "tsc",
     "test": "ng test",
     "serve:ssr:fabodyssey-frontend": "node ./node_modules/@angular/cli/bin/ng run fabodyssey-frontend:serve",

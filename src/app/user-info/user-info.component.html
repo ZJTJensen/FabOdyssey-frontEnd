@@ -1,24 +1,38 @@
 <div>
-    <div>
-        To display user data
-    </div>
-
     <div *ngIf="isDeckValid">
-        increase Level
-        <button (click)="increaseUserLevel()">Increase Level</button>
+        <button (click)="increaseUserLevel()" class="primary-button">Increase Level</button>
+        
     </div>
 
     <app-card-select *ngIf="userInfo.needsToSelectNewCard" [cardLimiters]='limiters' [cardList]="cardList"
         (quit)="quitFunc($event)" (selectedCard)="saveSelectedCardFunc($event)">
     </app-card-select>
 
-    <div *ngIf="!userInfo.needsToSelectNewCard && !logingIn">
-        Owened cards:
-        <div class="cardDiv">
-        <div class='card-image' *ngFor="let card of owenedCards">
-            <img src="{{getCardImage(card.identifier)}}">
+
+    <div *ngIf="!isDeckValid">
+        <button class="primary-button" (click)="displayCardsNotOwned = !displayCardsNotOwned">
+            {{ displayCardsNotOwned ? 'Hide Non Valid Cards' : 'Display Non Valid Cards' }}
+        </button>
+        <div class="cardDiv" *ngIf="displayCardsNotOwned">
+            <div class='card-image' *ngFor="let card of cardsNotOwned">
+                <img src="{{getCardImage(card.identifier)}}">
+            </div>
         </div>
+    </div>
+
+    <div *ngIf="!logingIn">
+        <button class="primary-button" (click)="displayOwnedCards = !displayOwnedCards">
+            {{ displayOwnedCards ? 'Hide Owned Cards' : 'Display Owned Cards' }}
+        </button>
+        <div class="cardDiv" *ngIf="displayOwnedCards">
+            <div class='card-image' *ngFor="let card of owenedCards">
+                <img src="{{getCardImage(card.identifier)}}">
+            </div>
         </div>
+    </div>
+
+    <div>
+        To display user data
     </div>
     <!-- 
     <div *ngIf="userInfo">
