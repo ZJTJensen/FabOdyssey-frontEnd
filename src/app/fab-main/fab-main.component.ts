@@ -163,8 +163,11 @@ export class FabMainComponent {
     let majesticCount = 0;
     for (let card of this.cardList){
       if(!card.keywords.includes("hero")) {
+        if(card.type.toLowerCase().includes('weapon') && card.rarity === 'R') {
+          console.log('valid weapon')
+        } 
         // Check if the card is of rarity 'R', 'M', 'S', or 'L'
-        if (['R', 'M', 'S', 'L'].includes(card.rarity)) {
+        else if (['R', 'M', 'S', 'L'].includes(card.rarity)) {
             // Check if the card is in the owned cards list
             if(this.owenedCards.some(ownedCard => ownedCard.identifier.includes(card.identifier))){
                 // Add the card to the deck
