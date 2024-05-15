@@ -5,7 +5,7 @@
     </div>
 
     <app-card-select *ngIf="userInfo.needsToSelectNewCard" [cardLimiters]='limiters'
-        [cardList]="cardList" [userInfo]="userInfo"
+        [cardList]="cardList" [userInfo]="userInfo" [owenedCards] = "owenedCards"
         (quit)="quitFunc($event)" (selectedCard)="saveSelectedCardFunc($event)">
     </app-card-select>
 

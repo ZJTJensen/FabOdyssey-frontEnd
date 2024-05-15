@@ -17,6 +17,7 @@ export class CardSelectComponent implements OnInit{
   @Input() cardLimiters: any;
   @Input() cardList: Array<any> = [];
   @Input() userInfo: any;
+  @Input() owenedCards: any;
   @Output() quit = new EventEmitter<string>();
   @Output() selectedCard = new EventEmitter<Card>();
   public userService: UserService;
@@ -34,9 +35,9 @@ export class CardSelectComponent implements OnInit{
       this.createCardList();
       for (let i =0;i < 3;) {
         let response = this.pullCard();
-        if(this.cardList.some(card => card.identifier === response.identifier)){
+        if(this.owenedCards.some((card : any) => response.identifier.includes(card.identifier))){
           console.log("Card already in deck")
-      }
+        }
         else if((response.types.includes("Equipment") && !response.types.includes("Action")) || response.types.includes('Weapon')) {
           console.log("Invalid card pulled")
         } else {
