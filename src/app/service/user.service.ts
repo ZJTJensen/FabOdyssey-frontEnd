@@ -38,7 +38,7 @@ import { Card } from 'fab-cards';
     public addSelectCard(userKey: string, cards: any): Observable<any> {
       let userRequest = {
         slug: userKey,
-        cards: cards
+        selectCards: cards
       }
       return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/select-cards', userRequest)
     }
