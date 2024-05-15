@@ -1,5 +1,5 @@
 <div>
-    <div *ngIf="isDeckValid">
+    <div *ngIf="isDeckValid && !userInfo.needsToSelectNewCard">
         <button (click)="increaseUserLevel()" class="primary-button">Increase Level</button>
         
     </div>
