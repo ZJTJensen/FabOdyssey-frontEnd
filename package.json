@@ -4,10 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
-    "build": "tsc --watch false",
+    "build": "tsc",
     "test": "ng test",
     "serve:ssr:fabodyssey-frontend": "node ./node_modules/@angular/cli/bin/ng run fabodyssey-frontend:serve",
-    "build:ssr": "ng build --configuration production && ng run fabodyssey-frontend:server:production",
+    "build:ssr": "ng run fabodyssey-frontend:server:production",
     "postinstall": "npm run build:ssr"
   },
   "private": true,
