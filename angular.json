@@ -63,6 +63,18 @@
           },
           "defaultConfiguration": "production"
         },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "fabodyssey-frontend:build:production"
+            },
+            "development": {
+              "buildTarget": "fabodyssey-frontend:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
@@ -86,18 +98,6 @@
               "vendorChunk": false
             }
           },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "fabodyssey-frontend:build:production"
-            },
-            "development": {
-              "buildTarget": "fabodyssey-frontend:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
