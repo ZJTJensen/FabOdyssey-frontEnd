@@ -3,10 +3,10 @@ const path = require('path');
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'dist/fabodyssey-frontend')));
+app.use(express.static(path.join(__dirname, 'dist/fabodyssey-frontend/browser')));
 
 app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'dist/fabodyssey-frontend', 'index.html'));
+    res.sendFile(path.join(__dirname, 'dist/fabodyssey-frontend/browser', 'index.html'));
 });
   
   // default Heroku port
