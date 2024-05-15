@@ -35,6 +35,21 @@ import { Card } from 'fab-cards';
       return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/card', userRequest)
     }
 
+    public addSelectCard(userKey: string, cards: any): Observable<any> {
+      let userRequest = {
+        slug: userKey,
+        cards: cards
+      }
+      return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/select-cards', userRequest)
+    }
+
+    public getSelectCard(userKey: string): Observable<any> {
+      let userRequest = {
+        slug: userKey
+      }
+      return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/get-select-card', userRequest)
+    }
+
     public getUseresInBracked(userKey: string): Observable<any> {
       let userRequest = {
         user: userKey

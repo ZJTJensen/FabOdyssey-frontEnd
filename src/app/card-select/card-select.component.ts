@@ -4,6 +4,7 @@ import { Card, cards } from "fab-cards";
 import { FabDbService } from '../service/fabDb.service';
 import { Card as FabCard } from "fab-cards";
 import { map } from 'rxjs';
+import { UserService } from '../service/user.service';
 
 @Component({
   selector: 'app-card-select',
@@ -15,40 +16,48 @@ import { map } from 'rxjs';
 export class CardSelectComponent implements OnInit{
   @Input() cardLimiters: any;
   @Input() cardList: Array<any> = [];
+  @Input() userInfo: any;
   @Output() quit = new EventEmitter<string>();
   @Output() selectedCard = new EventEmitter<Card>();
+  public userService: UserService;
   private fabDbService: FabDbService;
-  constructor(fabDbService: FabDbService){
+  constructor(fabDbService: FabDbService, userService: UserService){
     this.fabDbService = fabDbService;
+    this.userService = userService;
   }
   public validCards: any = new Array();
   public validRareCards: any = new Array();
   public validMajesticCards: any = new Array();
   public cardsToShow: any = new Array();
   ngOnInit(): void{
-    this.cresteCardList();
-    for (let i =0;i < 3;) {
-      let response = this.pullCard();
-      if(this.cardList.some(card => card.identifier === response.identifier)){
-        console.log("Card already in deck")
-    }
-      else if((response.types.includes("Equipment") && !response.types.includes("Action")) || response.types.includes('Weapon')) {
-        console.log("Invalid card pulled")
-      } else {
-        i++;
-        if(!response.defaultImage.includes('.png')) {
-          let cardLocation = response.defaultImage.split('.');
-          response.defaultImage = this.fabDbService.getImageUrl(cardLocation[0]);
-        }else {
-          console.log("Image already in correct format")
-        }
-        this.cardsToShow.push(response);
+    if(!this.userInfo.selectedcard) {
+      this.createCardList();
+      for (let i =0;i < 3;) {
+        let response = this.pullCard();
+        if(this.cardList.some(card => card.identifier === response.identifier)){
+          console.log("Card already in deck")
       }
+        else if((response.types.includes("Equipment") && !response.types.includes("Action")) || response.types.includes('Weapon')) {
+          console.log("Invalid card pulled")
+        } else {
+          i++;
+          if(!response.defaultImage.includes('.png')) {
+            let cardLocation = response.defaultImage.split('.');
+            response.defaultImage = this.fabDbService.getImageUrl(cardLocation[0]);
+          }else {
+            console.log("Image already in correct format")
+          }
+          this.cardsToShow.push(response);
+        }
+      }
+      this.userService.addCard(this.userInfo.slug, this.cardsToShow);
+    } else {
+      this.userService.getSelectCard(this.userInfo.slug);
       
     }
   }
 
-  public cresteCardList(){
+  public createCardList(){
     cards.forEach(card => {
       card.keywords?.forEach(keyword => {
         const text = card.functionalText;
