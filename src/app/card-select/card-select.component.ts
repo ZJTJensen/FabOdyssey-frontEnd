@@ -30,7 +30,7 @@ export class CardSelectComponent implements OnInit{
   public validMajesticCards: any = new Array();
   public cardsToShow: any = new Array();
   ngOnInit(): void{
-    if(!this.userInfo.selectedcard) {
+    if(!this.userInfo.selectCard) {
       this.createCardList();
       for (let i =0;i < 3;) {
         let response = this.pullCard();
@@ -50,10 +50,25 @@ export class CardSelectComponent implements OnInit{
           this.cardsToShow.push(response);
         }
       }
-      this.userService.addCard(this.userInfo.slug, this.cardsToShow);
+      this.userService.addSelectCard(this.userInfo.slug, this.cardsToShow).subscribe();
     } else {
-      this.userService.getSelectCard(this.userInfo.slug);
-      
+      this.userService.getSelectCard(this.userInfo.slug).subscribe((selectCard: any) => {
+        selectCard.forEach((cardToSelect: any) => {
+          cards.forEach(card =>{
+            if (card.cardIdentifier.includes(cardToSelect.cardIdentifier)) {
+              this.cardsToShow.push(card);
+            }
+          });
+          console.log('test');
+        });
+        this.cardsToShow.forEach((card: any)  => {
+          if(!card.defaultImage.includes('.png')) {
+            let cardLocation = card.defaultImage.split('.');
+            card.defaultImage = this.fabDbService.getImageUrl(cardLocation[0]);
+          }
+        });
+      });
+     
     }
   }
 

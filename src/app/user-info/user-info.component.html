@@ -27,7 +27,9 @@
         </button>
         <div class="cardDiv" *ngIf="displayOwnedCards">
             <div class='card-image' *ngFor="let card of owenedCards">
-                <img src="{{getCardImage(card.identifier)}}">
+                <div *ngIf="!card.toBeSelected"> 
+                    <img src="{{getCardImage(card.identifier)}}">
+                </div>
             </div>
         </div>
     </div>

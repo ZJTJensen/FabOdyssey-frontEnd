@@ -190,7 +190,11 @@ export class FabMainComponent {
       this.isDeckValid = false;
     } else if (cardCount <= userLevel) {
       this.isDeckValid = true;
-      if ((cardCount +  (this.owenedCards.length - totalCount)) < userLevel) {
+      let validOwnedCards = []
+      this.owenedCards.forEach(card => {
+        !card.toBeSelected ? validOwnedCards.push(card) : null;
+      });
+      if ((cardCount +  (validOwnedCards.length - totalCount)) < userLevel) {
         this.userInfo.needsToSelectNewCard = this.isLoggedIn ? true : false;
       }
     }
