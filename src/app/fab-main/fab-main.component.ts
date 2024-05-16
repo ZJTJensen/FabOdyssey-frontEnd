@@ -44,6 +44,7 @@ export class FabMainComponent {
   public isLoggedIn: boolean = false;
   public displayRules = false;
   public loginUrl: string = "https://fabdb.net/decks/";
+  public selectedHero: any;
 
   public login() {
     this.logingIn = true;
@@ -162,7 +163,9 @@ export class FabMainComponent {
     let rareCardCount = 0;
     let majesticCount = 0;
     for (let card of this.cardList){
-      if(!card.keywords.includes("hero")) {
+      if(card.keywords.includes("hero")) {
+        this.selectedHero = card;
+      } else {
         if(card.type.toLowerCase().includes('weapon') && card.rarity === 'R') {
           console.log('valid weapon')
         } 

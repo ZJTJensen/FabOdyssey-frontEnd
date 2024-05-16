@@ -16,6 +16,7 @@ export class UserInfoComponent implements OnInit {
   @Input() userInfo: any;
   @Input() isDeckValid: any;
   @Input() logingIn: any;
+  @Input() selectedHero: any;
   @Input() limiters: any;
   @Input() owenedCards: any;
   @Input() cardList: Array<any> = [];

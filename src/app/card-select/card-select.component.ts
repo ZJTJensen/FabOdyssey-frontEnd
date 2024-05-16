@@ -14,6 +14,7 @@ import { UserService } from '../service/user.service';
 export class CardSelectComponent implements OnInit{
   @Input() cardLimiters: any;
   @Input() cardList: Array<any> = [];
+  @Input() selectedHero: any;
   @Input() userInfo: any;
   @Input() owenedCards: any;
   @Output() quit = new EventEmitter<string>();
@@ -42,15 +43,17 @@ export class CardSelectComponent implements OnInit{
           } else if (response.types.includes('Weapon') && response.rarity === 'Rare') {
             console.log("Invalid weapon pulled")
           } else if(response.types.includes("Equipment") || response.types.includes("Weapon")){
-            if(!this.cardsToShow.includes(response)){
-              i++;
-              if(!response.defaultImage.includes('.png')) {
-                let cardLocation = response.defaultImage.split('.');
-                response.defaultImage = this.fabDbService.getImageUrl(cardLocation[0]);
-              }else {
-                console.log("Image already in correct format")
+            if(response.talents == null || response.talents.some((talent: any) => this.selectedHero.keywords.includes(talent.toLowerCase()))){
+              if(!this.cardsToShow.includes(response)){
+                i++;
+                if(!response.defaultImage.includes('.png')) {
+                  let cardLocation = response.defaultImage.split('.');
+                  response.defaultImage = this.fabDbService.getImageUrl(cardLocation[0]);
+                }else {
+                  console.log("Image already in correct format")
+                }
+                this.cardsToShow.push(response);
               }
-              this.cardsToShow.push(response);
             }
           }
 
@@ -62,15 +65,17 @@ export class CardSelectComponent implements OnInit{
           else if((response.types.includes("Equipment") && !response.types.includes("Action")) || response.types.includes('Weapon')) {
             console.log("Invalid card pulled")
           } else {
-            if(!this.cardsToShow.includes(response)){
-              i++;
-              if(!response.defaultImage.includes('.png')) {
-                let cardLocation = response.defaultImage.split('.');
-                response.defaultImage = this.fabDbService.getImageUrl(cardLocation[0]);
-              }else {
-                console.log("Image already in correct format")
+            if(response.talents == null || response.talents.some((talent: any) => this.selectedHero.keywords.includes(talent.toLowerCase()))){
+              if(!this.cardsToShow.includes(response)){
+                i++;
+                if(!response.defaultImage.includes('.png')) {
+                  let cardLocation = response.defaultImage.split('.');
+                  response.defaultImage = this.fabDbService.getImageUrl(cardLocation[0]);
+                }else {
+                  console.log("Image already in correct format")
+                }
+                this.cardsToShow.push(response);
               }
-              this.cardsToShow.push(response);
             }
           }
         }
