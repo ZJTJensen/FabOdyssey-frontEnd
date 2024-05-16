@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div *ngIf="!logingIn">
+    <div *ngIf="!logingIn && owenedCards.length > 0">
         <button class="primary-button" (click)="displayOwnedCards = !displayOwnedCards">
             {{ displayOwnedCards ? 'Hide Owned Cards' : 'Display Owned Cards' }}
         </button>
