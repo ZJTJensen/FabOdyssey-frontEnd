@@ -118,38 +118,35 @@ export class CardSelectComponent implements OnInit{
         let rarity: String = card.rarity;
         let isHeroType = false
         let isClass = false;
-        
-        // card.talents?.forEach(talents => { 
-        //   if(this.selectedHeroTrue.talents.includes(talents)) {
-        //     isClass = true;
-        //   }
-        // });
         card.classes.find(cls => this.selectedHeroTrue.classes.forEach((keyword: string) => {
           if(cls === keyword) {
             isHeroType = true;
           }
         }));
+        let anyTimeNotValid = true;
         this.selectedHeroTrue.talents?.forEach((talents: any) => {
           if((card.talents?.includes(talents) || card.fusions?.includes(talents)) && (card.classes[0] == "NotClassed" || isHeroType)) {
             isClass = true;
+          } else if (card.talents && (anyTimeNotValid && (!card.talents?.includes(talents) || !card.fusions?.includes(talents)))  && (isHeroType) ){
+            anyTimeNotValid = false;
           }
         });
+        isClass = isClass ? anyTimeNotValid : false;
 
         if((card.rarity === "Majestic" || card.rarity === "Super Rare" ||
             card.rarity === "Rare")){
           if(rarity === "Super Rare") {
             rarity = "Majestic";
           } 
-          if((isHeroType && !isClass) || (isHeroType || (isHeroType && isClass) || (isClass && card.classes.find(cls => cls === "Generic")))){
-            
-            if(text?.includes("Specialization")) {
+          if(text?.includes("Specialization") ) {
+            if(text.toLowerCase().includes(this.selectedHeroTrue.hero.toLowerCase())) {
               let cardSpec= card.specializations;
               if(cardSpec != undefined && this.cardLimiters.hero.name.includes(cardSpec[0])) {
                 (this as any)["valid" + rarity + "Cards"].push(card);
               }
-            }else { 
-              (this as any)["valid" + rarity + "Cards"].push(card);
             }
+          } else if( (isHeroType || (isHeroType && isClass) || (isClass && card.classes.find(cls => cls === "Generic")))){
+            (this as any)["valid" + rarity + "Cards"].push(card);
           } else if(card.classes.find(cls => cls === "Generic")) {
             (this as any)["valid" + rarity + "Cards"].push(card);
           } else if (isClass) {
