@@ -19,6 +19,7 @@ export class CardSelectComponent implements OnInit{
   @Input() owenedCards: any;
   @Output() quit = new EventEmitter<string>();
   @Output() selectedCard = new EventEmitter<Card>();
+  public selectedHeroTrue: any;
   public userService: UserService;
   private fabDbService: FabDbService;
   constructor(fabDbService: FabDbService, userService: UserService){
@@ -30,6 +31,11 @@ export class CardSelectComponent implements OnInit{
   public validMajesticCards: any = new Array();
   public cardsToShow: any = new Array();
   ngOnInit(): void{
+   cards.forEach(card => {
+      if(card.cardIdentifier === this.selectedHero.identifier) {
+        this.selectedHeroTrue = card;
+      }
+    });
     if(!this.userInfo.selectCard) {
       this.createCardList();
       for (let i =0;i < 3;) {
@@ -43,7 +49,7 @@ export class CardSelectComponent implements OnInit{
           } else if (response.types.includes('Weapon') && response.rarity === 'Rare') {
             console.log("Invalid weapon pulled")
           } else if(response.types.includes("Equipment") || response.types.includes("Weapon")){
-            if(response.talents == null || response.talents.some((talent: any) => this.selectedHero.keywords.includes(talent.toLowerCase()))){
+            if(response.talents == null || response.talents.some((talent: any) => this.selectedHero.keywords.includes(talent))){
               if(!this.cardsToShow.includes(response)){
                 i++;
                 if(!response.defaultImage.includes('.png')) {
@@ -65,7 +71,7 @@ export class CardSelectComponent implements OnInit{
           else if((response.types.includes("Equipment") && !response.types.includes("Action")) || response.types.includes('Weapon')) {
             console.log("Invalid card pulled")
           } else {
-            if(response.talents == null || response.talents.some((talent: any) => this.selectedHero.keywords.includes(talent.toLowerCase()))){
+            if(response.talents == null || (response.talents.some((talent: any) => this.selectedHeroTrue.talents.includes(talent)) || response)){
               if(!this.cardsToShow.includes(response)){
                 i++;
                 if(!response.defaultImage.includes('.png')) {
@@ -76,7 +82,10 @@ export class CardSelectComponent implements OnInit{
                 }
                 this.cardsToShow.push(response);
               }
-            }
+            } 
+            // else if (response.) {
+
+            // }
           }
         }
       }
@@ -109,16 +118,22 @@ export class CardSelectComponent implements OnInit{
         let rarity: String = card.rarity;
         let isHeroType = false
         let isClass = false;
-        card.talents?.forEach(talents => { 
-          if(this.cardLimiters.hero.keywords.includes(talents.toLowerCase())) {
-            isClass = true;
-          }
-        });
-        card.classes.find(cls => this.cardLimiters.hero.keywords.forEach((keyword: string) => {
-          if(cls.toLowerCase() === keyword.toLowerCase()) {
+        
+        // card.talents?.forEach(talents => { 
+        //   if(this.selectedHeroTrue.talents.includes(talents)) {
+        //     isClass = true;
+        //   }
+        // });
+        card.classes.find(cls => this.selectedHeroTrue.classes.forEach((keyword: string) => {
+          if(cls === keyword) {
             isHeroType = true;
           }
         }));
+        this.selectedHeroTrue.talents?.forEach((talents: any) => {
+          if((card.talents?.includes(talents) || card.fusions?.includes(talents)) && (card.classes[0] == "NotClassed" || isHeroType)) {
+            isClass = true;
+          }
+        });
 
         if((card.rarity === "Majestic" || card.rarity === "Super Rare" ||
             card.rarity === "Rare")){
@@ -136,6 +151,8 @@ export class CardSelectComponent implements OnInit{
               (this as any)["valid" + rarity + "Cards"].push(card);
             }
           } else if(card.classes.find(cls => cls === "Generic")) {
+            (this as any)["valid" + rarity + "Cards"].push(card);
+          } else if (isClass) {
             (this as any)["valid" + rarity + "Cards"].push(card);
           }
         }
