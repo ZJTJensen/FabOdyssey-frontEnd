@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Card, Talent, Type, cards } from "fab-cards";
+import { Card, Type, cards } from "fab-cards";
 import { FabDbService } from '../service/fabDb.service';
 import { UserService } from '../service/user.service';
 
@@ -77,8 +77,6 @@ export class CardSelectComponent implements OnInit{
                 if(!response.defaultImage.includes('.png')) {
                   let cardLocation = response.defaultImage.split('.');
                   response.defaultImage = this.fabDbService.getImageUrl(cardLocation[0]);
-                }else {
-                  console.log("Image already in correct format")
                 }
                 this.cardsToShow.push(response);
               }
@@ -95,7 +93,6 @@ export class CardSelectComponent implements OnInit{
               this.cardsToShow.push(card);
             }
           });
-          console.log('test');
         });
         this.cardsToShow.forEach((card: any)  => {
           if(!card.defaultImage.includes('.png')) {
@@ -126,9 +123,6 @@ export class CardSelectComponent implements OnInit{
             isClass = true;
           } 
         });
-        if ( isHeroType && card.types.includes(Type.Equipment) && card.rarity !== "Common") {
-          console.log("Elemental card pulled");
-        }
         let counter = 0;
         card.talents?.forEach((talents: any) => {
           if(this.selectedHeroTrue.talents.includes(talents) ) {
@@ -141,10 +135,6 @@ export class CardSelectComponent implements OnInit{
             anyTimeValid = false;
           }
         });
-        // if(card.talents && card.talents.length > 0 && (isClass &&  card.classes.find(cls => cls === "NotClassed"))){
-        //   isClass = anyTimeValid;
-        // }
-       
 
         if((card.rarity === "Majestic" || card.rarity === "Super Rare" ||
             card.rarity === "Rare")){
