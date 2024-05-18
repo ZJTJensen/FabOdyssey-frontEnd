@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Card, Talent, cards } from "fab-cards";
+import { Card, Talent, Type, cards } from "fab-cards";
 import { FabDbService } from '../service/fabDb.service';
 import { UserService } from '../service/user.service';
 
@@ -83,9 +83,6 @@ export class CardSelectComponent implements OnInit{
                 this.cardsToShow.push(response);
               }
             } 
-            // else if (response.) {
-
-            // }
           }
         }
       }
@@ -128,12 +125,8 @@ export class CardSelectComponent implements OnInit{
           if((card.talents?.includes(talents) || card.fusions?.includes(talents)) && (card.classes[0] == "NotClassed" || isHeroType)) {
             isClass = true;
           } 
-          // might need to move this for elemental cards
-          // else if (card.talents && (anyTimeNotValid && (!card.talents?.includes(talents) || !card.fusions?.includes(talents)))  && (isHeroType) ){
-          //   anyTimeNotValid = false;
-          // }
         });
-        if (card.talents && card.talents.includes(Talent.Shadow) && card.classes.find(cls => cls === "NotClassed")) {
+        if ( isHeroType && card.types.includes(Type.Equipment) && card.rarity !== "Common") {
           console.log("Elemental card pulled");
         }
         let counter = 0;
@@ -148,9 +141,9 @@ export class CardSelectComponent implements OnInit{
             anyTimeValid = false;
           }
         });
-        if(card.talents && card.talents.length > 0 && (isClass &&  card.classes.find(cls => cls === "NotClassed"))){
-          isClass = anyTimeValid;
-        }
+        // if(card.talents && card.talents.length > 0 && (isClass &&  card.classes.find(cls => cls === "NotClassed"))){
+        //   isClass = anyTimeValid;
+        // }
        
 
         if((card.rarity === "Majestic" || card.rarity === "Super Rare" ||
@@ -165,7 +158,7 @@ export class CardSelectComponent implements OnInit{
                 (this as any)["valid" + rarity + "Cards"].push(card);
               }
             }
-          } else if( (isClass || (isHeroType && isClass) || (isClass && card.classes.find(cls => cls === "Generic")))){
+          } else if( (isClass || (isHeroType && isClass) || (isHeroType && !card.talents) || (isClass && card.classes.find(cls => cls === "Generic")))){
             (this as any)["valid" + rarity + "Cards"].push(card);
           } else if(card.classes.find(cls => cls === "Generic")) {
             (this as any)["valid" + rarity + "Cards"].push(card);
@@ -189,9 +182,7 @@ export class CardSelectComponent implements OnInit{
   }
 
   public choseCard(card: Card){
-  // this.fabDbService.getCardData(card.setIdentifiers[0]).subscribe((data: Card) => {
     this.selectedCard.emit(card);
-  // });
   }
 
   public returnHome(){
