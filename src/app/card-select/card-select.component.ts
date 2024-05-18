@@ -38,7 +38,9 @@ export class CardSelectComponent implements OnInit{
     });
     if(!this.userInfo.selectCard) {
       this.createCardList();
-      for (let i =0;i < 3;) {
+      let attempts = 0;
+      for (let i =0;i < 3 && attempts < 6000;) {
+        attempts++;
         if(this.userInfo.userLevel % 5 === 0){
           let response = this.pullCard();
           if(this.owenedCards.some((card : any) => response.cardIdentifier.includes(card.identifier))){
