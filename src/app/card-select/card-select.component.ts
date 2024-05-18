@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Card, cards } from "fab-cards";
+import { Card, Talent, cards } from "fab-cards";
 import { FabDbService } from '../service/fabDb.service';
 import { UserService } from '../service/user.service';
 
@@ -123,15 +123,35 @@ export class CardSelectComponent implements OnInit{
             isHeroType = true;
           }
         }));
-        let anyTimeNotValid = true;
+        let anyTimeValid = true;
         this.selectedHeroTrue.talents?.forEach((talents: any) => {
           if((card.talents?.includes(talents) || card.fusions?.includes(talents)) && (card.classes[0] == "NotClassed" || isHeroType)) {
             isClass = true;
-          } else if (card.talents && (anyTimeNotValid && (!card.talents?.includes(talents) || !card.fusions?.includes(talents)))  && (isHeroType) ){
-            anyTimeNotValid = false;
+          } 
+          // might need to move this for elemental cards
+          // else if (card.talents && (anyTimeNotValid && (!card.talents?.includes(talents) || !card.fusions?.includes(talents)))  && (isHeroType) ){
+          //   anyTimeNotValid = false;
+          // }
+        });
+        if (card.talents && card.talents.includes(Talent.Shadow) && card.classes.find(cls => cls === "NotClassed")) {
+          console.log("Elemental card pulled");
+        }
+        let counter = 0;
+        card.talents?.forEach((talents: any) => {
+          if(this.selectedHeroTrue.talents.includes(talents) ) {
+            if(counter == 0 || anyTimeValid) {
+              counter ++;
+              anyTimeValid = true;
+            }
+          } else if (this.selectedHero.talents && !this.selectedHero.talents.includes(talents) && anyTimeValid) {
+            counter ++;
+            anyTimeValid = false;
           }
         });
-        isClass = isClass ? anyTimeNotValid : false;
+        if(card.talents && card.talents.length > 0 && (isClass &&  card.classes.find(cls => cls === "NotClassed"))){
+          isClass = anyTimeValid;
+        }
+       
 
         if((card.rarity === "Majestic" || card.rarity === "Super Rare" ||
             card.rarity === "Rare")){
@@ -145,7 +165,7 @@ export class CardSelectComponent implements OnInit{
                 (this as any)["valid" + rarity + "Cards"].push(card);
               }
             }
-          } else if( (isHeroType || (isHeroType && isClass) || (isClass && card.classes.find(cls => cls === "Generic")))){
+          } else if( (isClass || (isHeroType && isClass) || (isClass && card.classes.find(cls => cls === "Generic")))){
             (this as any)["valid" + rarity + "Cards"].push(card);
           } else if(card.classes.find(cls => cls === "Generic")) {
             (this as any)["valid" + rarity + "Cards"].push(card);
