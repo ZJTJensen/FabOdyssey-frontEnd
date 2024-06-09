@@ -6,6 +6,7 @@ import { Card as FabCard } from "fab-cards";
 import { CommonModule } from '@angular/common';
 import { Observable, mergeMap, switchMap, tap } from 'rxjs';
 import { CardSelectComponent } from '../card-select/card-select.component';
+import { WorldMapComponent } from '../world-map/world-map.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { UserInfoComponent } from '../user-info/user-info.component';
 import { RulesComponent } from '../rules/rules.component';
@@ -13,7 +14,7 @@ import { RulesComponent } from '../rules/rules.component';
 @Component({
   selector: 'app-fab-main',
   standalone: true,
-  imports: [CommonModule, CardSelectComponent, UserInfoComponent, NgxMaskDirective, NgxMaskPipe, RulesComponent],
+  imports: [CommonModule, CardSelectComponent, UserInfoComponent, WorldMapComponent, NgxMaskDirective, NgxMaskPipe, RulesComponent],
   providers: [provideNgxMask()],
   templateUrl: './fab-main.component.html',
   styleUrl: './fab-main.component.scss'

@@ -171,3 +171,20 @@ div {
 .rules-text{
     color:#f45052 !important;
 }
+
+
+.map-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.overlay-map {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
