@@ -9,14 +9,14 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './world-map.component.css'
 })
 export class WorldMapComponent implements AfterViewInit {
-  @ViewChild('imageContainer') image!: ElementRef;
+  @ViewChild('imageContainer') imageContainer!: ElementRef;
 
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      let img = this.image.nativeElement;
+      let img = this.imageContainer.nativeElement;
       this.makeImageDraggable(img);
     }
   }
@@ -32,14 +32,6 @@ export class WorldMapComponent implements AfterViewInit {
       img.style.zIndex = '1000';
     };
     
-    let clickableAreas = Array.from(document.querySelectorAll('.clickable-area')).map(area => {
-      return {
-        element: area,
-        prevLeft: area.getBoundingClientRect().left,
-        prevTop: area.getBoundingClientRect().top
-      };
-    });
-    
     document.onmousemove = (event: MouseEvent) => {
       if (!isMoving) return;
     
@@ -52,9 +44,6 @@ export class WorldMapComponent implements AfterViewInit {
 
     img.onmouseup = () => {
       isMoving = false;
-      clickableAreas.forEach((clickableArea: any) => {
-        clickableArea.element.addEventListener('click', () => this.handleClick(clickableArea.element.id))
-      });
     };
 
     img.ondragstart = () => {
