@@ -9,7 +9,7 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './world-map.component.css'
 })
 export class WorldMapComponent implements AfterViewInit {
-  @ViewChild('draggableImage') image!: ElementRef;
+  @ViewChild('imageContainer') image!: ElementRef;
 
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
@@ -48,27 +48,13 @@ export class WorldMapComponent implements AfterViewInit {
     
       img.style.left = newLeft + 'px';
       img.style.top = newTop + 'px';
-    
-      clickableAreas.forEach((clickableArea: any) => {
-        let diffLeft = clickableArea.prevLeft - newLeft;
-        let diffTop = clickableArea.prevTop - newTop;
-        let areaLeft = parseFloat(clickableArea.element.style.left || '0');
-        let areaTop = parseFloat(clickableArea.element.style.top || '0');
-        if( (newLeft < 0 || newTop < 0) && (clickableArea.prevLeft + newLeft < 0 || clickableArea.prevTop + newTop < 0)) {
-          clickableArea.element.style.left = (areaLeft - diffLeft) + 'px';
-          clickableArea.element.style.top = (areaTop - diffTop) + 'px';
-        } else {
-          clickableArea.element.style.left = ((areaLeft - diffLeft) > 0 ? areaLeft - diffLeft : diffLeft - areaLeft) + 'px';
-          clickableArea.element.style.top = ((areaTop - diffTop) > 0 ? areaTop - diffTop : diffTop - areaTop) + 'px';
-        }
-        clickableArea.prevLeft = newLeft;
-        clickableArea.prevTop = newTop;
-       clickableArea.element.addEventListener('click', () => this.handleClick(clickableArea.element.id));
-      });
     };
 
     img.onmouseup = () => {
       isMoving = false;
+      clickableAreas.forEach((clickableArea: any) => {
+        clickableArea.element.addEventListener('click', () => this.handleClick(clickableArea.element.id))
+      });
     };
 
     img.ondragstart = () => {

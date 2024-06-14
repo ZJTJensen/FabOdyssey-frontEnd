@@ -3,11 +3,12 @@
 }
 
 .image-container {
-    position: absolute;
+    position: relative;
+    width: 1000px;
 }
   
 .clickable-area {
-    position: fixed;
+    position: absolute;
     background-color: transparent;
 }
   

@@ -1,13 +1,11 @@
-<div class="image-container">
+<div class="image-container" #imageContainer>
+    <div class="clickable-area" (click)="handleClick('exit')" id="exit"></div>
+    <div class="clickable-area" (click)="handleClick('solana')" id="solana"></div>
+    <div class="clickable-area" (click)="handleClick('thePitsMetrix')" id="thePitsMetrix"></div>
+    <div class="clickable-area" (click)="handleClick('savageLands')" id="savageLands"></div>
+    <div class="clickable-area" (click)="handleClick('aria')" id="aria"></div>
+    <div class="clickable-area" (click)="handleClick('misteria')" id="misteria"></div>
+    <div class="clickable-area" (click)="handleClick('volcor')" id="volcor"></div>
+    <div class="clickable-area" (click)="handleClick('demonastery')" id="demonastery"></div>
     <img #draggableImage src="../../assets/world-map-small.jpg" class="map">
-    <div>
-      <div class="clickable-area" (click)="handleClick('exit')" id="exit"></div>
-      <div class="clickable-area" (click)="handleClick('solana')" id="solana"></div>
-      <div class="clickable-area" (click)="handleClick('thePitsMetrix')" id="thePitsMetrix"></div>
-      <div class="clickable-area" (click)="handleClick('savageLands')" id="savageLands"></div>
-      <div class="clickable-area" (click)="handleClick('aria')" id="aria"></div>
-      <div class="clickable-area" (click)="handleClick('misteria')" id="misteria"></div>
-      <div class="clickable-area" (click)="handleClick('volcor')" id="volcor"></div>
-      <div class="clickable-area" (click)="handleClick('demonastery')" id="demonastery"></div>
-    </div>
-  </div>
+</div>
