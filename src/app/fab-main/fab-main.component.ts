@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FabDbService } from '../service/fabDb.service';
 import { UserService } from '../service/user.service';
 import { Deck, Card } from '../models/fabDbDecks'; 
@@ -10,6 +10,7 @@ import { WorldMapComponent } from '../world-map/world-map.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { UserInfoComponent } from '../user-info/user-info.component';
 import { RulesComponent } from '../rules/rules.component';
+import {LocalStorage, SessionStorage, LocalStorageService} from 'ngx-webstorage';
 
 @Component({
   selector: 'app-fab-main',
@@ -19,13 +20,15 @@ import { RulesComponent } from '../rules/rules.component';
   templateUrl: './fab-main.component.html',
   styleUrl: './fab-main.component.scss'
 })
-export class FabMainComponent {
+export class FabMainComponent implements OnInit{
 
   public deckService: FabDbService;
   public userService: UserService;
-  constructor(deckService: FabDbService, userService: UserService){
+  public localStorage: LocalStorageService;
+  constructor(deckService: FabDbService, userService: UserService, localStorage: LocalStorageService){
     this.deckService = deckService,
     this.userService = userService;
+    this.localStorage = localStorage;
   }
   public response: any = new Object() as Deck;
   public deckUrl: string = "";
@@ -49,26 +52,35 @@ export class FabMainComponent {
   public showNav = false;
   public showMap = false;
 
+  public ngOnInit(): void {
+    this.isLoggedIn = this.localStorage.retrieve('isLoggedId') ? true : false;
+    if(this.isLoggedIn) {
+      this.userInfo = this.localStorage.retrieve('userInfo');
+      this.owenedCards = this.localStorage.retrieve('owenedCards');
+    }
+  }
+
   public login() {
-    this.logingIn = true;
     this.getUser().pipe(
       tap(userAndDeck => {
         this.userInfo = userAndDeck.user.slug ? userAndDeck.user : undefined;
-        this.isLoggedIn = this.userInfo ? true : false;
+        this.localStorage.store('userInfo', this.userInfo);
+        this.userInfo ? this.loginSession() : this.logoutSession();
         this.owenedCards = userAndDeck.cards.length > 0 ? userAndDeck.cards : this.owenedCards;
+        this.localStorage.store('owenedCards', this.owenedCards);
       }),
       switchMap(() => {
-        this.logingIn = false;
+        this.logoutSession();
         return this.getDeck();
       })
     ).subscribe(
       () => {
         this.loginAttempt = true;
-        this.logingIn = false;
+        this.logoutSession();
       },
       error => {
         this.loginAttempt = true;
-        this.logingIn = false;
+        this.logoutSession();
       }
     );
   }
@@ -218,6 +230,14 @@ export class FabMainComponent {
     if(this.showNav) {
       this.toggleNav();
     }
+  }
+  loginSession() {
+    this.isLoggedIn = true;
+    this.localStorage.store('isLoggedId', this.isLoggedIn);
+  }
+  logoutSession() {
+    this.isLoggedIn = false;
+    this.localStorage.store('isLoggedId', this.isLoggedIn);
   }
 
 }
