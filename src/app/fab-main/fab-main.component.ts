@@ -10,13 +10,13 @@ import { WorldMapComponent } from '../world-map/world-map.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { UserInfoComponent } from '../user-info/user-info.component';
 import { RulesComponent } from '../rules/rules.component';
-import {LocalStorage, SessionStorage, LocalStorageService} from 'ngx-webstorage';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-fab-main',
   standalone: true,
   imports: [CommonModule, CardSelectComponent, UserInfoComponent, WorldMapComponent, NgxMaskDirective, NgxMaskPipe, RulesComponent],
-  providers: [provideNgxMask()],
+  providers: [provideNgxMask(), LocalStorageService],
   templateUrl: './fab-main.component.html',
   styleUrl: './fab-main.component.scss'
 })
