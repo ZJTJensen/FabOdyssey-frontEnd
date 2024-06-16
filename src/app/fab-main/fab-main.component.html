@@ -1,3 +1,15 @@
+<button class="hamburger" (click)="toggleNav()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </button>
+
+<div class="side-nav" [class.show]="showNav">
+    <p (click)="toggleNav()" class="close">X</p>
+    <p (click)="toggleMap()">World Map</p>
+    <p>Link 2</p>
+    <p>Link 3</p>
+</div>
 <div>
     <img id="logo" src="../../assets/logo.png">
     <div id="rules">
@@ -56,7 +68,7 @@
         (increaseLevel)="increaseLevel()">
     </app-user-info>
 
-    <div class="map-container">
+    <div class="map-container" *ngIf="showMap">
         <world-map class="overlay-map">
         </world-map>
     </div>

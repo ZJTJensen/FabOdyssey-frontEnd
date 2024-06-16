@@ -46,6 +46,8 @@ export class FabMainComponent {
   public displayRules = false;
   public loginUrl: string = "https://fabdb.net/decks/";
   public selectedHero: any;
+  public showNav = false;
+  public showMap = false;
 
   public login() {
     this.logingIn = true;
@@ -204,6 +206,17 @@ export class FabMainComponent {
       if ((cardCount +  (validOwnedCards.length - totalCount)) < userLevel) {
         this.userInfo.needsToSelectNewCard = this.isLoggedIn ? true : false;
       }
+    }
+  }
+
+  toggleNav() {
+    this.showNav = !this.showNav;
+  }
+
+  toggleMap() {
+    this.showMap = !this.showMap;
+    if(this.showNav) {
+      this.toggleNav();
     }
   }
 
