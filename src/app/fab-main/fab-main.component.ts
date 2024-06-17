@@ -56,8 +56,8 @@ export class FabMainComponent implements OnInit{
 
   public ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      if(localStorage.getItem('isLoggedId')){
-        this.isLoggedIn = localStorage.getItem('isLoggedId') === 'true' ? true : false;
+      if(localStorage.getItem('isLoggedIn')){
+        this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true' ? true : false;
         if(this.isLoggedIn) {
           this.userInfo = localStorage.getItem('userInfo');
           let cards = localStorage.getItem('owenedCards');
@@ -249,15 +249,14 @@ export class FabMainComponent implements OnInit{
   loginSession() {
     if (isPlatformBrowser(this.platformId)) {
       this.isLoggedIn = true;
-      localStorage.setItem('isLoggedId', this.isLoggedIn.toString());
+      localStorage.setItem('isLoggedIn', this.isLoggedIn.toString());
     }
   }
   logoutSession() {
     if (isPlatformBrowser(this.platformId)) {
       this.isLoggedIn = false;
-      localStorage.setItem('isLoggedId', '');
-      localStorage.setItem('userInfo', '');
-      localStorage.setItem('owenedCards', '');
+      localStorage.clear();
+      location.reload();
     }
   }
 
