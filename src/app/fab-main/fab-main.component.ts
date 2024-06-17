@@ -260,4 +260,14 @@ export class FabMainComponent implements OnInit{
     }
   }
 
+  handleAreaClicked(area: string) {
+    switch(area) {
+      case 'exit':
+        this.toggleMap();
+        break;
+      default:
+        break;
+    }
+  }
+
 }

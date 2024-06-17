@@ -71,7 +71,7 @@
     </app-user-info>
 
     <div class="map-container" *ngIf="showMap">
-        <world-map class="overlay-map">
+        <world-map class="overlay-map" (areaClicked)="handleAreaClicked($event)">
         </world-map>
     </div>
     <div *ngIf="!isDeckValid">

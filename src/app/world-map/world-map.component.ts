@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'world-map',
@@ -10,6 +12,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class WorldMapComponent implements AfterViewInit {
   @ViewChild('imageContainer') imageContainer!: ElementRef;
+  @Output() areaClicked = new EventEmitter<string>();
 
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
@@ -50,8 +53,7 @@ export class WorldMapComponent implements AfterViewInit {
       return false;
     };
   }
-
   handleClick(area: string) {
-    console.log(`Clicked on ${area}`);
+    this.areaClicked.emit(area);
   }
 }
