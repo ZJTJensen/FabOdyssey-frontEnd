@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FabDbService } from '../service/fabDb.service';
 import { UserService } from '../service/user.service';
 import { Deck, Card } from '../models/fabDbDecks'; 
@@ -10,13 +10,16 @@ import { WorldMapComponent } from '../world-map/world-map.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { UserInfoComponent } from '../user-info/user-info.component';
 import { RulesComponent } from '../rules/rules.component';
-import { LocalStorageService } from 'ngx-webstorage';
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID } from '@angular/core';
+
 
 @Component({
   selector: 'app-fab-main',
   standalone: true,
-  imports: [CommonModule, CardSelectComponent, UserInfoComponent, WorldMapComponent, NgxMaskDirective, NgxMaskPipe, RulesComponent],
-  providers: [provideNgxMask(), LocalStorageService],
+  imports: [CommonModule, CardSelectComponent, UserInfoComponent,
+    WorldMapComponent, NgxMaskDirective, NgxMaskPipe, RulesComponent,],
+  providers: [provideNgxMask()],
   templateUrl: './fab-main.component.html',
   styleUrl: './fab-main.component.scss'
 })
@@ -24,11 +27,10 @@ export class FabMainComponent implements OnInit{
 
   public deckService: FabDbService;
   public userService: UserService;
-  public localStorage: LocalStorageService;
-  constructor(deckService: FabDbService, userService: UserService, localStorage: LocalStorageService){
+
+  constructor(deckService: FabDbService, userService: UserService, @Inject(PLATFORM_ID) private platformId: Object){
     this.deckService = deckService,
     this.userService = userService;
-    this.localStorage = localStorage;
   }
   public response: any = new Object() as Deck;
   public deckUrl: string = "";
@@ -53,34 +55,47 @@ export class FabMainComponent implements OnInit{
   public showMap = false;
 
   public ngOnInit(): void {
-    this.isLoggedIn = this.localStorage.retrieve('isLoggedId') ? true : false;
-    if(this.isLoggedIn) {
-      this.userInfo = this.localStorage.retrieve('userInfo');
-      this.owenedCards = this.localStorage.retrieve('owenedCards');
+    if (isPlatformBrowser(this.platformId)) {
+      if(localStorage.getItem('isLoggedId')){
+        this.isLoggedIn = localStorage.getItem('isLoggedId') === 'true' ? true : false;
+        if(this.isLoggedIn) {
+          this.userInfo = localStorage.getItem('userInfo');
+          let cards = localStorage.getItem('owenedCards');
+          if (cards) { 
+            this.owenedCards = JSON.parse(cards) === "" ? [] : JSON.parse(cards);
+          }
+          if(this.userInfo) {
+            this.userInfo = JSON.parse(this.userInfo);
+            this.deckUrl = this.userInfo.slug;
+            this.getDeck().subscribe();
+          }
+        }
+      }
     }
+
   }
 
   public login() {
     this.getUser().pipe(
       tap(userAndDeck => {
         this.userInfo = userAndDeck.user.slug ? userAndDeck.user : undefined;
-        this.localStorage.store('userInfo', this.userInfo);
+        localStorage.setItem('userInfo', JSON.stringify(this.userInfo));
         this.userInfo ? this.loginSession() : this.logoutSession();
         this.owenedCards = userAndDeck.cards.length > 0 ? userAndDeck.cards : this.owenedCards;
-        this.localStorage.store('owenedCards', this.owenedCards);
+        localStorage.setItem('owenedCards', JSON.stringify(this.owenedCards));
       }),
       switchMap(() => {
-        this.logoutSession();
+        this.logingIn = false;
         return this.getDeck();
       })
     ).subscribe(
       () => {
         this.loginAttempt = true;
-        this.logoutSession();
+        this.logingIn = false;
       },
       error => {
         this.loginAttempt = true;
-        this.logoutSession();
+        this.logingIn = false;
       }
     );
   }
@@ -232,12 +247,18 @@ export class FabMainComponent implements OnInit{
     }
   }
   loginSession() {
-    this.isLoggedIn = true;
-    this.localStorage.store('isLoggedId', this.isLoggedIn);
+    if (isPlatformBrowser(this.platformId)) {
+      this.isLoggedIn = true;
+      localStorage.setItem('isLoggedId', this.isLoggedIn.toString());
+    }
   }
   logoutSession() {
-    this.isLoggedIn = false;
-    this.localStorage.store('isLoggedId', this.isLoggedIn);
+    if (isPlatformBrowser(this.platformId)) {
+      this.isLoggedIn = false;
+      localStorage.setItem('isLoggedId', '');
+      localStorage.setItem('userInfo', '');
+      localStorage.setItem('owenedCards', '');
+    }
   }
 
 }

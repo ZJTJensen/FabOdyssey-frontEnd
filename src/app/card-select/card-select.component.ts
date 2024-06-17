@@ -127,7 +127,7 @@ export class CardSelectComponent implements OnInit{
         });
         let counter = 0;
         card.talents?.forEach((talents: any) => {
-          if(this.selectedHeroTrue.talents.includes(talents) ) {
+          if(this.selectedHeroTrue.talents && this.selectedHeroTrue.talents.includes(talents) ) {
             if(counter == 0 || anyTimeValid) {
               counter ++;
               anyTimeValid = true;
