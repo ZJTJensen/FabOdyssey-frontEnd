@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FabDbService } from '../service/fabDb.service';
 import { UserService } from '../service/user.service';
+import { HeroOrigin } from './hero-origin';
 import { Deck, Card } from '../models/fabDbDecks'; 
 import { Card as FabCard } from "fab-cards";
 import { CommonModule } from '@angular/common';
@@ -31,12 +32,15 @@ export class FabMainComponent implements OnInit{
 
   public deckService: FabDbService;
   public userService: UserService;
+  public heroOrigin: HeroOrigin;
 
   constructor(deckService: FabDbService, userService: UserService,
+    heroOrigin: HeroOrigin,
     @Inject(PLATFORM_ID) private platformId: Object,
     @Inject(DOCUMENT) private document: Document, private renderer: Renderer2, private el: ElementRef){
     this.deckService = deckService,
     this.userService = userService;
+    this.heroOrigin = heroOrigin;
   }
   public response: any = new Object() as Deck;
   public deckUrl: string = "";
@@ -73,6 +77,9 @@ export class FabMainComponent implements OnInit{
           if(this.userInfo) {
             this.userInfo = JSON.parse(this.userInfo);
             this.deckUrl = this.userInfo.slug;
+            if(this.userInfo.originlocation) {
+              this.changeImage(this.userInfo.originlocation);
+            }
             this.getDeck().subscribe();
           }
         }
@@ -86,7 +93,9 @@ export class FabMainComponent implements OnInit{
       tap(userAndDeck => {
         this.userInfo = userAndDeck.user.slug ? userAndDeck.user : undefined;
         localStorage.setItem('userInfo', JSON.stringify(this.userInfo));
-        this.userInfo ? this.loginSession() : this.logoutSession();
+        if(this.userInfo) {
+          this.loginSession();
+        } 
         this.owenedCards = userAndDeck.cards.length > 0 ? userAndDeck.cards : this.owenedCards;
         localStorage.setItem('owenedCards', JSON.stringify(this.owenedCards));
       }),
@@ -176,7 +185,8 @@ export class FabMainComponent implements OnInit{
   }
 
   public signUp(){
-    this.userService.setUserInfo(this.userName, this.phone, this.response).subscribe(
+    let area = this.heroOrigin.getOrigin(this.selectedHero);
+    this.userService.setUserInfo(this.userName, this.phone, this.response, area).subscribe(
       response => {
           console.log(response);
           this.login();
