@@ -28,8 +28,9 @@ import { Card } from 'fab-cards';
       }
       return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/create', userRequest)
     }
-    public setLocation(area: string){
+    public setLocation(slug: string, area: string){
       let locationRequest = {
+        slug: slug,
         location: area
       }
       return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/setLocation', locationRequest)

@@ -264,7 +264,7 @@ export class FabMainComponent implements OnInit{
   }
   changeMap(area: string){
     if(area){
-      // this.userService.setLocation(area).subscribe();
+      // this.userService.setLocation(this.userInfo.slug, area).subscribe();
       this.changeImage(area);
     }
   }
