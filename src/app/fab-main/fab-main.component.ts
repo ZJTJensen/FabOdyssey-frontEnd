@@ -12,6 +12,10 @@ import { UserInfoComponent } from '../user-info/user-info.component';
 import { RulesComponent } from '../rules/rules.component';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
+import { Renderer2, ElementRef } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+
+
 
 
 @Component({
@@ -28,7 +32,9 @@ export class FabMainComponent implements OnInit{
   public deckService: FabDbService;
   public userService: UserService;
 
-  constructor(deckService: FabDbService, userService: UserService, @Inject(PLATFORM_ID) private platformId: Object){
+  constructor(deckService: FabDbService, userService: UserService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(DOCUMENT) private document: Document, private renderer: Renderer2, private el: ElementRef){
     this.deckService = deckService,
     this.userService = userService;
   }
@@ -246,6 +252,38 @@ export class FabMainComponent implements OnInit{
       this.toggleNav();
     }
   }
+  changeMap(area: string){
+    if(area){
+      // this.userService.setLocation(area).subscribe();
+      this.changeImage(area);
+    }
+  }
+  changeImage(area: string) {
+    // Assuming you have a method to get the image URL based on the area
+    const imageUrl = 'assets/world-imgs/'+area.toLowerCase()+'.jpg';
+
+    // Get a reference to the body element
+    const body = this.document.body;
+    // Change the background image of the body
+    this.renderer.setStyle(body, 'backgroundImage', `url(${imageUrl})`);
+     // Set the height of the background image to 100%
+    this.renderer.setStyle(body, 'height', '100%');
+    this.renderer.setStyle(body, 'backgroundPosition', 'center');
+    this.renderer.listen(body, 'mousemove', (event) => {
+      // Calculate the background position based on the mouse coordinates
+      const xPos = (event.clientX / window.innerWidth - 0.5) * 40; // 40 instead of 50 to limit to 20px
+      const yPos = (event.clientY / window.innerHeight - 0.5) * 40; // 40 instead of 50 to limit to 20px
+    
+      // Limit the movement to 20px in either direction
+      const limitedXPos = Math.max(-20, Math.min(20, xPos));
+      const limitedYPos = Math.max(-20, Math.min(20, yPos));
+    
+      // Update the background position
+      this.renderer.setStyle(body, 'backgroundPosition', `calc(50% + ${limitedXPos}px) calc(50% + ${limitedYPos}px)`);
+    });
+
+}
+  
   loginSession() {
     if (isPlatformBrowser(this.platformId)) {
       this.isLoggedIn = true;
@@ -254,16 +292,61 @@ export class FabMainComponent implements OnInit{
   }
   logoutSession() {
     if (isPlatformBrowser(this.platformId)) {
+      this.clearBackgroundImage();
       this.isLoggedIn = false;
       localStorage.clear();
       location.reload();
     }
   }
 
+  clearBackgroundImage() {
+    // Get a reference to the body element
+    const body = this.document.body;
+  
+    // Remove the background image
+    this.renderer.removeStyle(body, 'backgroundImage');
+  
+    // Remove the mousemove event listener
+    this.renderer.listen(body, 'mousemove', () => {});
+  }
+
+
   handleAreaClicked(area: string) {
     switch(area) {
       case 'exit':
         this.toggleMap();
+        break;
+      case 'solana':
+        this.toggleMap();
+        this.changeMap(area);
+        break;
+      case 'thePitts':
+        this.toggleMap();
+        this.changeMap(area);
+        break;
+      case 'metrix':
+        this.toggleMap();
+        this.changeMap(area);
+        break;
+      case 'savageLands':
+        this.toggleMap();
+        this.changeMap(area);
+        break;
+      case 'aria':
+        this.toggleMap();
+        this.changeMap(area);
+        break;
+      case 'misteria':
+        this.toggleMap();
+        this.changeMap(area);
+        break;
+      case 'volcor':
+        this.toggleMap();
+        this.changeMap(area);
+        break;
+      case 'demonastery':
+        this.toggleMap();
+        this.changeMap(area);
         break;
       default:
         break;
