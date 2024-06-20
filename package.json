@@ -1,6 +1,9 @@
 {
   "name": "fabodyssey-frontend",
   "version": "0.0.0",
+  "engines": {
+    "node": "20.12.0"
+  },
   "scripts": {
     "ng": "ng",
     "start": "node serve.js",
