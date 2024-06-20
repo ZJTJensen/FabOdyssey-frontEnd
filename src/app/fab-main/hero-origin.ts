@@ -6,7 +6,6 @@ export class HeroOrigin {
   constructor() {
   }
 
-
   private heros = [
     {"hero": "arakni", "origin": "thepits"},
     {"hero": "azalea", "origin": "thepits"},

@@ -6,7 +6,9 @@
 
 <div class="side-nav" [class.show]="showNav">
     <p (click)="toggleNav()" class="close">X</p>
-    <p (click)="toggleMap()">World Map</p>
+    <div class="link-div">
+        <p (click)="toggleMap()" class="side-nav-link">World Map</p>
+    </div>
     <div *ngIf="isLoggedIn">
         <p (click)="logoutSession()" class="logout-button">Logout</p>
     </div>

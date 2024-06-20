@@ -16,9 +16,6 @@ import { PLATFORM_ID } from '@angular/core';
 import { Renderer2, ElementRef } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
-
-
-
 @Component({
   selector: 'app-fab-main',
   standalone: true,
@@ -303,7 +300,10 @@ export class FabMainComponent implements OnInit{
     // Change the background image of the body
     this.renderer.setStyle(body, 'backgroundImage', `url(${imageUrl})`);
      // Set the height of the background image to 100%
-    this.renderer.setStyle(body, 'height', '100%');
+    this.renderer.setStyle(body, 'height', '100%');    
+    this.renderer.setStyle(body, 'backgroundSize', '2000px auto');  
+    this.renderer.setStyle(body, 'backgroundRepeat', 'no-repeat');
+    this.renderer.setStyle(body, 'backgroundAttachment', 'fixed');
     this.renderer.setStyle(body, 'backgroundPosition', 'center');
     this.renderer.listen(body, 'mousemove', (event) => {
       // Calculate the background position based on the mouse coordinates
