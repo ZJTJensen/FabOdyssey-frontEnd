@@ -19,13 +19,21 @@ import { Card } from 'fab-cards';
       }
       return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/fetch', userRequest)
     }
-    public setUserInfo(userKey: string, phoneNumber: number, deck: Deck): Observable<any> {
+    public setUserInfo(userKey: string, phoneNumber: number, deck: Deck, area: String): Observable<any> {
       let userRequest = {
         user: userKey,
         phoneNumber: phoneNumber,
-        deck: deck
+        deck: deck,
+        originlocation: area
       }
       return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/create', userRequest)
+    }
+    public setLocation(slug: string, area: string){
+      let locationRequest = {
+        slug: slug,
+        location: area
+      }
+      return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/setLocation', locationRequest)
     }
     public addCard(userKey: string, card: Card): Observable<any> {
       let userRequest = {

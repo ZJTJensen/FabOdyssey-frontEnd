@@ -12,22 +12,26 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/build-angular": "^17.3.8",
     "@angular/animations": "^17.2.0",
     "@angular/cli": "^17.2.2",
     "@angular/common": "^17.2.0",
-    "@angular/compiler": "^17.2.0",
+    "@angular/compiler": "^17.3.11",
+    "@angular/compiler-cli": "^17.3.11",
     "@angular/core": "^17.2.0",
     "@angular/forms": "^17.2.0",
     "@angular/platform-browser": "^17.2.0",
     "@angular/platform-browser-dynamic": "^17.2.0",
-    "@angular-devkit/build-angular": "^17.2.2",
     "@angular/platform-server": "^17.2.0",
     "@angular/router": "^17.2.0",
     "@angular/ssr": "^17.2.2",
     "@types/express": "^4.17.21",
     "fab-cards": "^8.0.147",
     "ngx-mask": "^17.0.7",
+    "ngx-webstorage": "^18.0.0",
     "rxjs": "~7.8.0",
-    "ts-node": "^10.4.0"
+    "ts-node": "^10.4.0",
+    "typescript": "^5.4.5",
+    "zone.js": "^0.14.7"
   }
 }

@@ -1,0 +1,70 @@
+.map{
+    width: 1000px;
+}
+
+.image-container {
+    position: relative;
+    width: 1000px;
+}
+  
+.clickable-area {
+    position: absolute;
+    background-color: transparent;
+}
+  
+  /* Adjust the following rules to position the clickable areas over the image */
+.clickable-area:nth-child(1) {
+    top: 0px;
+    left: 0px;
+    width: 100px;
+    height: 100px;
+}
+  
+.clickable-area:nth-child(2) {
+    top: 250px;
+    left: 510px;
+    width: 100px;
+    height: 100px;
+}
+.clickable-area:nth-child(3) {
+    top: 150px;
+    left: 290px;
+    width: 100px;
+    height: 100px;
+}
+.clickable-area:nth-child(4) {
+    top: 330px;
+    left: 250px;
+    width: 100px;
+    height: 100px;
+}
+.clickable-area:nth-child(5) {
+    top: 150px;
+    left: 650px;
+    width: 100px;
+    height: 100px;
+}
+.clickable-area:nth-child(6) {
+    top: 275px;
+    left: 750px;
+    width: 100px;
+    height: 100px;
+}
+.clickable-area:nth-child(7) {
+    top: 375px;
+    left: 550px;
+    width: 100px;
+    height: 100px;
+}
+.clickable-area:nth-child(8) {
+    top: 520px;
+    left: 370px;
+    width: 100px;
+    height: 100px;
+}
+.clickable-area:nth-child(9) {
+    top: 150px;
+    left: 390px;
+    width: 100px;
+    height: 100px;
+}

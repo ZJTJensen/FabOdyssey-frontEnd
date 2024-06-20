@@ -1,3 +1,17 @@
+<button class="hamburger" (click)="toggleNav()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </button>
+
+<div class="side-nav" [class.show]="showNav">
+    <p (click)="toggleNav()" class="close">X</p>
+    <p (click)="toggleMap()">World Map</p>
+    <div *ngIf="isLoggedIn">
+        <p (click)="logoutSession()" class="logout-button">Logout</p>
+    </div>
+    
+</div>
 <div>
     <img id="logo" src="../../assets/logo.png">
     <div id="rules">
@@ -56,6 +70,10 @@
         (increaseLevel)="increaseLevel()">
     </app-user-info>
 
+    <div class="map-container" *ngIf="showMap">
+        <world-map class="overlay-map" (areaClicked)="handleAreaClicked($event)">
+        </world-map>
+    </div>
     <div *ngIf="!isDeckValid">
 
     </div>
