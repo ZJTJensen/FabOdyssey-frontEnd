@@ -77,8 +77,13 @@ export class FabMainComponent implements OnInit{
           if(this.userInfo) {
             this.userInfo = JSON.parse(this.userInfo);
             this.deckUrl = this.userInfo.slug;
-            if(this.userInfo.originlocation) {
-              this.changeImage(this.userInfo.originlocation);
+            if(this.userInfo && this.userInfo.originlocation) {
+              this.originLocation(this.userInfo.originlocation);
+              if(this.userInfo.location) {
+                this.changeImage(this.userInfo.location);
+              } else {
+                this.changeMap(this.userInfo.originlocation);
+              }
             }
             this.getDeck().subscribe();
           }
@@ -95,6 +100,14 @@ export class FabMainComponent implements OnInit{
         localStorage.setItem('userInfo', JSON.stringify(this.userInfo));
         if(this.userInfo) {
           this.loginSession();
+          if(this.userInfo && this.userInfo.originlocation) {
+            this.originLocation(this.userInfo.originlocation);
+            if(this.userInfo.location) {
+              this.changeImage(this.userInfo.location);
+            } else {
+              this.changeMap(this.userInfo.originlocation);
+            }
+          }
         } 
         this.owenedCards = userAndDeck.cards.length > 0 ? userAndDeck.cards : this.owenedCards;
         localStorage.setItem('owenedCards', JSON.stringify(this.owenedCards));
@@ -264,10 +277,23 @@ export class FabMainComponent implements OnInit{
   }
   changeMap(area: string){
     if(area){
-      // this.userService.setLocation(this.userInfo.slug, area).subscribe();
+      this.userService.setLocation(this.userInfo.slug, area).subscribe();
+      this.userInfo.location = area;
+      localStorage.setItem('userInfo', JSON.stringify(this.userInfo));
       this.changeImage(area);
     }
   }
+
+
+  originLocation(area: string) {
+    const imageUrl = 'assets/icons/'+area.toLowerCase()+'.png';
+    // Get a reference to the img element
+    const imgElement = this.document.getElementById('origin-icon');
+
+    // Change the src attribute of the img element
+    this.renderer.setAttribute(imgElement, 'src', imageUrl);
+  }
+
   changeImage(area: string) {
     // Assuming you have a method to get the image URL based on the area
     const imageUrl = 'assets/world-imgs/'+area.toLowerCase()+'.jpg';
@@ -330,7 +356,7 @@ export class FabMainComponent implements OnInit{
         this.toggleMap();
         this.changeMap(area);
         break;
-      case 'thePitts':
+      case 'thePits':
         this.toggleMap();
         this.changeMap(area);
         break;

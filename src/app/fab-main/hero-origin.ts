@@ -8,8 +8,8 @@ export class HeroOrigin {
 
 
   private heros = [
-    {"hero": "arakni", "origin": "thepitts"},
-    {"hero": "azalea", "origin": "thepitts"},
+    {"hero": "arakni", "origin": "thepits"},
+    {"hero": "azalea", "origin": "thepits"},
     {"hero": "betsy", "origin": "solana"},
     {"hero": "bravo", "origin": "aria"},
     {"hero": "dash", "origin": "metrix"},
@@ -26,10 +26,10 @@ export class HeroOrigin {
     {"hero": "olympia", "origin": "solana"},
     {"hero": "prism", "origin": "solana"},
     {"hero": "rhinar", "origin": "savageLands"},
-    {"hero": "riptide", "origin": "thepitts"},
+    {"hero": "riptide", "origin": "thepits"},
     {"hero": "boltyn", "origin": "solana"},
     {"hero": "teklovossen", "origin": "metrix"},
-    {"hero": "uzuri", "origin": "thepitts"},
+    {"hero": "uzuri", "origin": "thepits"},
     {"hero": "victor", "origin": "solana"},
     {"hero": "visserai", "origin": "demontastery"},
     {"hero": "vynnset", "origin": "demontastery"},
@@ -45,7 +45,7 @@ export class HeroOrigin {
     {"hero": "emperor", "origin": "volcor"},
     {"hero": "florian", "origin": "aria"},
     {"hero": "genis", "origin": "solana"},
-    {"hero": "kavdaen", "origin": "thepitts"},
+    {"hero": "kavdaen", "origin": "thepits"},
     {"hero": "lexi", "origin": "aria"},
     {"hero": "melody", "origin": "solana"},
     {"hero": "shiyana", "origin": "solana"},
