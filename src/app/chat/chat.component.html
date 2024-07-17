@@ -1,0 +1,35 @@
+<div class="chat-container">
+    <div class='message-container'>
+        <div class='messages' *ngFor="let message of messages">
+            <div>
+                <span class="userName" *ngIf="messages[message - 1].user != message.user">
+                    {{message.user}}
+                </span>
+                <span>
+                    {{message.message}}
+                </span>
+                <span>
+                    {{message.timeStamp}}
+                </span>
+                <div class="right-click">
+                    <span class="" (click)="reportUser(message.user)">Report user</span>
+                    <div *ngIf="userInfo.friends.contains(message.user)">
+                        <span class="" (click)="addFriend(message.user)">add friend</span>
+                    </div>
+                    <div *ngIf="message.alreadyFriends">
+                        <span class="" (click)="removeFriend(message.user)">remove friend</span>
+                    </div>
+                    <div class="admin">
+                        <span class="" (click)="deleteUser(message.user)">Delete user</span>
+                        <span class="" (click)="deleteMessage(message.uuid)">Delete message</span>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chat-container">
+        <input class='chat-message' type='text' (keyup)="saveMessage($event)"/>
+        <div class='chat-submit' (click)="setMessage()">Send Message > </div>
+    </div>
+</div>

@@ -9,23 +9,27 @@
     <div class="link-div">
         <p (click)="toggleMap()" class="side-nav-link">World Map</p>
     </div>
+    <div class="link-div">
+        <p (click)="showDeckBuilder = true" class="side-nav-link">Deck Builder</p>
+    </div>
     <div *ngIf="isLoggedIn">
         <p (click)="logoutSession()" class="logout-button">Logout</p>
     </div>
-    
-</div>
-<div>
-    <img id="logo" src="../../assets/logo.png">
-    <div id="rules">
-        <button class="rules-text" *ngIf="!displayRules" (click)="toggleRules()">Show Rules</button>
-        <app-rules *ngIf="displayRules">
-            
-        </app-rules>
-        <button *ngIf="displayRules" (click)="toggleRules()" class="rules-text">Hide Rules</button>
-    </div>
 </div>
 
-<div id="content">
+<div *ngIf="showDeckBuilder">
+</div>
+<div id="content" *ngIf="!showDeckBuilder">
+    <div>
+        <img id="logo" src="../../assets/logo.png">
+        <div id="rules">
+            <button class="rules-text" *ngIf="!displayRules" (click)="toggleRules()">Show Rules</button>
+            <app-rules *ngIf="displayRules">
+                
+            </app-rules>
+            <button *ngIf="displayRules" (click)="toggleRules()" class="rules-text">Hide Rules</button>
+        </div>
+    </div>
     <div *ngIf="!userInfo && !logingIn">
         <div> 
             <span class="input-label"> login (fabdb link) </span>
@@ -76,8 +80,12 @@
         <world-map class="overlay-map" (areaClicked)="handleAreaClicked($event)">
         </world-map>
     </div>
-    <div *ngIf="!isDeckValid">
-
+    <div class="chat-container" *ngIf="isLoggedIn" >
+        <div (click)="toggleChat()" class="diplay-chat-header">
+            Display chat
+        </div>
+        <chat *ngIf="displayChat" [userInfo]="userInfo">
+        </chat>
     </div>
 </div>
 

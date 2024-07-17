@@ -69,6 +69,22 @@ import { Card } from 'fab-cards';
       return this.http.get<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/loggedInUsers')
     }
 
+    public getMessages(): Observable<any> {
+      let userRequest = {
+        location: '',
+        userName: ''
+    }
+      return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/loggedInUsers', userRequest)
+    }
+    public setMessages(message: string): Observable<any> {
+      let userRequest = {
+        location: '',
+        userName: '',
+        message: ''
+    }
+      return this.http.post<any>('https://fabodyssey-backend-3878f5102434.herokuapp.com/user/loggedInUsers', userRequest)
+    }
+
     public addLevel(slug: string, newLevel: number): Observable<any> {
       let userRequest = {
           slug: slug,

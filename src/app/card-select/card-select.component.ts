@@ -30,8 +30,9 @@ export class CardSelectComponent implements OnInit{
   public validRareCards: any = new Array();
   public validMajesticCards: any = new Array();
   public cardsToShow: any = new Array();
-  ngOnInit(): void{
-   cards.forEach(card => {
+  ngOnInit(): void{  
+  this.userInfo = this.userService.getUserInfo(this.userInfo.slug).subscribe(()=> {
+    cards.forEach(card => {
       if(card.cardIdentifier === this.selectedHero.identifier) {
         this.selectedHeroTrue = card;
       }
@@ -68,10 +69,8 @@ export class CardSelectComponent implements OnInit{
         } else {
           let response = this.pullCard();
           if(this.owenedCards.some((card : any) => response.cardIdentifier.includes(card.identifier))){
-            console.log("Card already in deck")
           }
           else if((response.types.includes("Equipment") && !response.types.includes("Action")) || response.types.includes('Weapon')) {
-            console.log("Invalid card pulled")
           } else {
             if(response.talents == null || (response.talents.some((talent: any) => this.selectedHeroTrue.talents.includes(talent)) || response)){
               if(!this.cardsToShow.includes(response)){
@@ -105,6 +104,8 @@ export class CardSelectComponent implements OnInit{
       });
      
     }
+  });
+  
   }
 
   public createCardList(){
@@ -173,6 +174,9 @@ export class CardSelectComponent implements OnInit{
     return card;
   }
 
+  public reportUser(event: Event){
+    return null;
+  }
   public choseCard(card: Card){
     this.selectedCard.emit(card);
   }

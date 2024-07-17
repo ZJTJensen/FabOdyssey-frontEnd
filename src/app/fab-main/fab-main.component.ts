@@ -10,6 +10,8 @@ import { CardSelectComponent } from '../card-select/card-select.component';
 import { WorldMapComponent } from '../world-map/world-map.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { UserInfoComponent } from '../user-info/user-info.component';
+import { DeckBuilderComponent } from '../deck-builder/deck-builder.component';
+import { ChatComponent } from '../chat/chat.component';
 import { RulesComponent } from '../rules/rules.component';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
@@ -20,7 +22,8 @@ import { DOCUMENT } from '@angular/common';
   selector: 'app-fab-main',
   standalone: true,
   imports: [CommonModule, CardSelectComponent, UserInfoComponent,
-    WorldMapComponent, NgxMaskDirective, NgxMaskPipe, RulesComponent,],
+    WorldMapComponent, NgxMaskDirective, NgxMaskPipe, RulesComponent,
+    ChatComponent],
   providers: [provideNgxMask()],
   templateUrl: './fab-main.component.html',
   styleUrl: './fab-main.component.scss'
@@ -60,6 +63,8 @@ export class FabMainComponent implements OnInit{
   public selectedHero: any;
   public showNav = false;
   public showMap = false;
+  public displayChat = false;
+  public showDeckBuilder = false; 
 
   public ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -181,6 +186,10 @@ export class FabMainComponent implements OnInit{
   );
   }
 
+  public toggleChat() {
+    this.displayChat = !this.displayChat;
+  }
+
   public increaseLevel(){
     this.userService.addLevel(this.response.slug, this.userInfo.userLevel + 1)
     .subscribe(
@@ -272,6 +281,7 @@ export class FabMainComponent implements OnInit{
       this.toggleNav();
     }
   }
+
   changeMap(area: string){
     if(area){
       this.userService.setLocation(this.userInfo.slug, area).subscribe();
